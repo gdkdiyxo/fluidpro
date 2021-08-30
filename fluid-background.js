@@ -172,6 +172,22 @@ function supportRenderTextureFormat(gl, internalFormat, format, type) {
 	var status = gl.checkFramebufferStatus(gl.FRAMEBUFFER);
 	return status == gl.FRAMEBUFFER_COMPLETE;
 }
+        function startGUI() {
+	var gui = new dat.GUI({ width: 300 });
+	gui.add(config, 'DYE_RESOLUTION', { high: 1024, medium: 512, low: 256, 'very low': 128 })
+		.name('')
+		.onFinishChange(initFramebuffers);
+	gui.add(config, 'SIM_RESOLUTION', { 32: 32, 64: 64, 128: 128, 256: 256 })
+		.name('')
+		.onFinishChange(initFramebuffers);
+	gui.add(config, 'DENSITY_DISSIPATION', 0, 4.0).name('');
+	gui.add(config, 'VELOCITY_DISSIPATION', 0, 4.0).name('');
+	gui.add(config, 'PRESSURE', 0.0, 1.0).name('');
+	gui.add(config, 'CURL', 0, 50).name('').step(1);
+	gui.add(config, 'SPLAT_RADIUS', 0.01, 1.0).name('');
+	gui.add(config, 'SHADING').name('').onFinishChange(updateKeywords);
+	gui.add(config, 'COLORFUL').name('');
+	gui.add(config, 'PAUSED').name('').listen();
 
 
 	gui.add(
